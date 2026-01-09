@@ -1,3 +1,9 @@
+ご要望に従い、先ほど追加した「クーポンの下の別枠での注意事項表示」を削除し、代わりに各ハーブピーリングメニューの「Caution（注意事項）」欄の中にテキストを直接追記する形に修正しました。
+
+全体のデザイン（ゴールド基調、華やかなクーポン）はそのまま維持しています。
+
+HTML
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -66,8 +72,7 @@
             align-items: center;
         }
 
-        /* * Enhanced Coupon Style (Flashy/Glamorous)
-         */
+        /* Enhanced Coupon Style (Flashy/Glamorous) */
         .coupon-glamorous {
             background: linear-gradient(135deg, #fff 0%, #fffbf2 50%, #fff 100%);
             position: relative;
@@ -113,7 +118,6 @@
             color: white;
             font-size: 10px;
         }
-
     </style>
 </head>
 <body class="text-gray-700 h-screen overflow-hidden flex flex-col font-sans">
@@ -171,7 +175,6 @@
                     </h3>
                     <div class="grid grid-cols-1 gap-2 text-sm" id="menuSelectionArea">
                         </div>
-                    <p class="text-[10px] text-red-400 mt-2 ml-1">※ハーブピーリング選択時、クーポン欄に注意事項が表示されます。</p>
                 </section>
 
                 <section class="bg-white p-4 rounded-xl shadow-sm border border-brand-100/50">
@@ -368,28 +371,6 @@
                             
                             <p class="text-[9px] text-brand-400 mt-2">※他のクーポンとの併用不可 / ご本人様のみ有効</p>
                         </div>
-
-                        <div id="herbWarningArea" class="hidden bg-white border border-red-200 rounded-lg p-4 shadow-sm relative">
-                            <h5 class="text-xs font-bold text-red-500 mb-3 text-center tracking-widest border-b border-red-100 pb-2">《ハーブピーリング注意事項》</h5>
-                            <ul class="text-[10px] text-gray-600 space-y-2 list-none text-left leading-relaxed">
-                                <li class="flex items-start gap-1.5">
-                                    <span class="text-red-400">●</span>
-                                    <span>当日、顔を濡らさないようにご注意ください。<br>(洗顔、汗をかく運動、サウナ、プール)</span>
-                                </li>
-                                <li class="flex items-start gap-1.5">
-                                    <span class="text-red-400">●</span>
-                                    <span>翌日からたくさん保湿をお願いします<br>(施術後乾燥しやすくなります。1週間毎日パックできると◎)</span>
-                                </li>
-                                <li class="flex items-start gap-1.5">
-                                    <span class="text-red-400">●</span>
-                                    <span>日焼け対策お願いいたします。</span>
-                                </li>
-                                <li class="flex items-start gap-1.5">
-                                    <span class="text-red-400">●</span>
-                                    <span>施術後2週間はレチノール、ビタミンA含有化粧品などピーリング作用があるものは使用しないでください。</span>
-                                </li>
-                            </ul>
-                        </div>
                     </div>
 
                     <div class="bg-brand-50/80 p-5 text-center border-t border-brand-100 relative z-10">
@@ -412,17 +393,17 @@
             { 
                 name: "ハーブピーリング（剥離あり）", 
                 advice: "剥離が始まるまでは、専用の化粧品で2-3時間おきに保湿・沈静を行ってください。",
-                caution: "施術後24時間は洗顔・メイクができません。当日は汗をかく行為（入浴・運動）や飲酒はお控えください。"
+                caution: "施術後24時間は洗顔・メイク不可。当日の発汗・飲酒はお控えください。日焼け対策をお願いいたします。施術後2週間はレチノール、ビタミンA含有化粧品などピーリング作用があるものは使用しないでください。"
             },
             { 
                 name: "ハーブピーリング（剥離なし）", 
                 advice: "お肌の代謝が上がり、吸収率が高まっています。いつもより多めに化粧水を重ね付けしてください。",
-                caution: "長時間の入浴やサウナなど、体温が急激に上がる行為は赤みの原因になりますのでお控えください。"
+                caution: "長時間の入浴や急激な体温上昇はお控えください。日焼け対策をお願いいたします。施術後2週間はレチノール、ビタミンA含有化粧品などピーリング作用があるものは使用しないでください。"
             },
             { 
                 name: "ハーブピーリング（背中）", 
                 advice: "背中は乾燥しやすい部位です。お風呂上がりはなるべく早めにボディクリーム等で保湿してください。",
-                caution: "痒みが出た場合は冷たいタオルで冷やしてください。掻いてしまうと色素沈着の原因になります。"
+                caution: "痒みが出た場合は冷やしてください。掻くと色素沈着の原因になります。日焼け対策をお願いいたします。施術後2週間はレチノール、ビタミンA含有化粧品などピーリング作用があるものは使用しないでください。"
             },
             { 
                 name: "脱毛", 
@@ -615,17 +596,14 @@
             document.getElementById('previewName').innerText = name + (name.includes('様') ? '' : ' 様');
             document.getElementById('previewDate').innerText = document.getElementById('visitDate').value.replace(/-/g, '.');
 
-            // --- Menu Logic & Herb Peeling Check ---
+            // --- Menu Logic ---
             const menuChecks = document.querySelectorAll('.menu-check:checked');
             const menuList = document.getElementById('previewMenuList');
             const adviceArea = document.getElementById('dynamicAdviceArea');
-            const herbWarningArea = document.getElementById('herbWarningArea');
             
             menuList.innerHTML = '';
             adviceArea.innerHTML = '';
             
-            let isHerbPeelingSelected = false;
-
             if (menuChecks.length === 0) {
                 menuList.innerHTML = '<span class="text-xs text-brand-300 font-medium">施術内容なし</span>';
                 adviceArea.classList.add('hidden');
@@ -640,11 +618,6 @@
                 menuChecks.forEach(chk => {
                     const idx = parseInt(chk.value);
                     const item = menuData[idx];
-
-                    // Check for Herb Peeling (indices 0, 1, 2)
-                    if (idx === 0 || idx === 1 || idx === 2) {
-                        isHerbPeelingSelected = true;
-                    }
 
                     // Badge
                     const badge = document.createElement('span');
@@ -675,14 +648,6 @@
                 });
                 adviceArea.appendChild(adviceWrapper);
             }
-
-            // --- Herb Peeling Warning Visibility ---
-            if (isHerbPeelingSelected) {
-                herbWarningArea.classList.remove('hidden');
-            } else {
-                herbWarningArea.classList.add('hidden');
-            }
-
 
             // --- Chart Visibility ---
             const showChart = document.getElementById('toggleChart').checked;
