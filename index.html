@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Esthetic Salon: After-Care Sheet (Gold)</title>
+    <title>Esthetic Salon: After-Care Sheet (Premium Gold)</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     
@@ -11,7 +11,7 @@
 
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 
-    <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&family=Playfair+Display:ital,wght@1,400;1,700&display=swap" rel="stylesheet">
 
     <script>
         tailwind.config = {
@@ -19,11 +19,12 @@
                 extend: {
                     fontFamily: {
                         sans: ['"Zen Kaku Gothic New"', 'sans-serif'],
+                        serif: ['"Playfair Display"', 'serif'],
                     },
                     colors: {
                         // Luxurious Gold Palette
                         brand: {
-                            50: '#fffbf2',   // Creamy White background wash
+                            50: '#fffbf2',   // Creamy White background
                             100: '#fef3c7',  // Light Beige Gold
                             200: '#fde68a',  // Soft Gold tint
                             300: '#fcd34d',  // Bright Gold accent
@@ -48,10 +49,10 @@
             width: 6px;
         }
         .custom-scroll::-webkit-scrollbar-track {
-            background: #fffbf2; /* brand-50 */
+            background: #fffbf2; 
         }
         .custom-scroll::-webkit-scrollbar-thumb {
-            background: #fde68a; /* brand-200 */
+            background: #fde68a; 
             border-radius: 3px;
         }
         
@@ -65,26 +66,54 @@
             align-items: center;
         }
 
-        /* Coupon Ticket Style - Enhanced for Gold Theme */
-        .coupon-ticket {
-            background: linear-gradient(135deg, #fffbf2 0%, #ffffff 50%, #fffbf2 100%);
-            background-image: radial-gradient(circle at left center, transparent 10px, #fffbf2 10px),
-                              radial-gradient(circle at right center, transparent 10px, #fffbf2 10px);
-            background-position: top left, top right;
-            background-size: 51% 100%;
-            background-repeat: no-repeat;
-            filter: drop-shadow(0 4px 3px rgb(212 175 55 / 0.15)); /* Gold shadow */
-            border: 1px solid #fde68a; /* brand-200 */
+        /* * Enhanced Coupon Style (Flashy/Glamorous)
+         */
+        .coupon-glamorous {
+            background: linear-gradient(135deg, #fff 0%, #fffbf2 50%, #fff 100%);
             position: relative;
+            border: double 4px transparent;
+            border-radius: 12px;
+            background-image: linear-gradient(white, white), 
+                              linear-gradient(to bottom right, #fcd34d, #d4af37, #b4941f);
+            background-origin: border-box;
+            background-clip: padding-box, border-box;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.25);
+            overflow: hidden;
         }
-        .coupon-ticket::before {
+
+        /* Decorative "Corner" flourishes */
+        .coupon-glamorous::before,
+        .coupon-glamorous::after {
             content: '';
             position: absolute;
-            top: 4px; left: 4px; right: 4px; bottom: 4px;
-            border: 1px dashed #d4af37; /* brand-500 dashed border inside */
-            border-radius: 8px;
-            pointer-events: none;
+            width: 40px;
+            height: 40px;
+            border: 1px solid #d4af37;
+            border-radius: 50%;
+            opacity: 0.3;
         }
+        .coupon-glamorous::before { top: -20px; left: -20px; }
+        .coupon-glamorous::after { bottom: -20px; right: -20px; }
+
+        /* Ribbon Effect */
+        .ribbon-top {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 24px;
+            background: #d4af37;
+            clip-path: polygon(0 0, 100% 0, 85% 100%, 15% 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .ribbon-star {
+            color: white;
+            font-size: 10px;
+        }
+
     </style>
 </head>
 <body class="text-gray-700 h-screen overflow-hidden flex flex-col font-sans">
@@ -107,7 +136,6 @@
                     <h1 class="font-bold text-lg flex items-center gap-1">
                         <span class="text-brand-200">✨</span> エステ・カルテ作成
                     </h1>
-                    <p class="text-xs text-brand-100 opacity-90">メニューを選ぶとアドバイスが自動生成されます</p>
                 </div>
                 <button onclick="resetForm()" class="text-xs bg-brand-800/50 px-3 py-1 rounded hover:bg-brand-800 transition border border-brand-300/50">リセット</button>
             </div>
@@ -143,6 +171,7 @@
                     </h3>
                     <div class="grid grid-cols-1 gap-2 text-sm" id="menuSelectionArea">
                         </div>
+                    <p class="text-[10px] text-red-400 mt-2 ml-1">※ハーブピーリング選択時、クーポン欄に注意事項が表示されます。</p>
                 </section>
 
                 <section class="bg-white p-4 rounded-xl shadow-sm border border-brand-100/50">
@@ -205,7 +234,7 @@
 
                 <section class="bg-white p-4 rounded-xl shadow-sm border border-brand-100/50">
                     <h3 class="text-sm font-bold text-brand-600 uppercase tracking-wide mb-3 border-b border-brand-100 pb-1">⑥ 次回クーポン</h3>
-                    <div class="grid grid-cols-2 gap-3 text-sm">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
                         <label class="flex items-center space-x-2 cursor-pointer bg-brand-50/50 p-3 rounded-lg border border-transparent hover:border-brand-300 transition shadow-sm">
                             <input type="radio" name="coupon" value="none" checked onchange="updateUI()" class="accent-brand-600 w-4 h-4">
                             <span class="text-brand-700 font-medium">なし</span>
@@ -221,6 +250,14 @@
                         <label class="flex items-center space-x-2 cursor-pointer bg-white border border-brand-200 p-3 rounded-lg hover:bg-brand-50 hover:border-brand-300 transition shadow-sm group">
                             <input type="radio" name="coupon" value="2000" onchange="updateUI()" class="accent-brand-600 w-4 h-4">
                             <span class="font-bold text-red-500 group-hover:text-red-600 transition">2,000円 OFF</span>
+                        </label>
+                        <label class="flex items-center space-x-2 cursor-pointer bg-white border border-brand-200 p-3 rounded-lg hover:bg-brand-50 hover:border-brand-300 transition shadow-sm group md:col-span-2">
+                            <input type="radio" name="coupon" value="pack" onchange="updateUI()" class="accent-brand-600 w-4 h-4">
+                            <span class="font-bold text-brand-600 group-hover:text-brand-700 transition">ホームケアアフターパックプレゼント！</span>
+                        </label>
+                        <label class="flex items-center space-x-2 cursor-pointer bg-white border border-brand-200 p-3 rounded-lg hover:bg-brand-50 hover:border-brand-300 transition shadow-sm group md:col-span-2">
+                            <input type="radio" name="coupon" value="massage" onchange="updateUI()" class="accent-brand-600 w-4 h-4">
+                            <span class="font-bold text-brand-600 group-hover:text-brand-700 transition">マッサージ5分延長！</span>
                         </label>
                     </div>
                 </section>
@@ -314,14 +351,44 @@
                     </div>
 
                     <div id="previewCoupon" class="hidden px-6 pb-8 relative z-10">
-                        <div class="coupon-ticket bg-white p-5 text-center rounded-xl relative shadow-md">
-                            <p class="text-[10px] text-brand-500 font-bold mb-2 tracking-wider uppercase">Special Gift for Next Visit</p>
-                            <h3 class="text-xl font-black text-brand-600 mb-2 pb-3 border-b-2 border-dashed border-brand-200 inline-flex items-end justify-center gap-1 w-full">
-                                <span class="text-sm text-brand-400 font-medium mb-1">施術代より</span>
-                                <span id="couponValue" class="text-3xl text-red-500 drop-shadow-sm">500</span>
-                                <span class="text-base font-bold text-red-500 mb-1">円 OFF</span>
-                            </h3>
-                            <p class="text-[9px] text-brand-400 mt-3 bg-brand-50/50 py-1 px-2 rounded-full inline-block">※他のクーポンとの併用不可 / ご本人様のみ有効</p>
+                        <div class="coupon-glamorous p-5 text-center relative mb-4">
+                            <div class="ribbon-top">
+                                <span class="ribbon-star text-white">★ SPECIAL ★</span>
+                            </div>
+                            
+                            <p class="text-[10px] text-brand-500 font-bold mb-3 mt-3 tracking-wider uppercase">Special Gift for Next Visit</p>
+                            
+                            <div class="border-b-2 border-dashed border-brand-200 pb-3 mb-2">
+                                <span id="couponPrefix" class="block text-xs text-brand-400 font-medium mb-1">施術代より</span>
+                                <div class="flex items-end justify-center gap-1 flex-wrap">
+                                    <span id="couponValue" class="text-3xl font-black text-brand-600 drop-shadow-sm leading-none" style="font-family: 'Playfair Display', serif;">500</span>
+                                    <span id="couponUnit" class="text-sm font-bold text-red-500 mb-1">円 OFF</span>
+                                </div>
+                            </div>
+                            
+                            <p class="text-[9px] text-brand-400 mt-2">※他のクーポンとの併用不可 / ご本人様のみ有効</p>
+                        </div>
+
+                        <div id="herbWarningArea" class="hidden bg-white border border-red-200 rounded-lg p-4 shadow-sm relative">
+                            <h5 class="text-xs font-bold text-red-500 mb-3 text-center tracking-widest border-b border-red-100 pb-2">《ハーブピーリング注意事項》</h5>
+                            <ul class="text-[10px] text-gray-600 space-y-2 list-none text-left leading-relaxed">
+                                <li class="flex items-start gap-1.5">
+                                    <span class="text-red-400">●</span>
+                                    <span>当日、顔を濡らさないようにご注意ください。<br>(洗顔、汗をかく運動、サウナ、プール)</span>
+                                </li>
+                                <li class="flex items-start gap-1.5">
+                                    <span class="text-red-400">●</span>
+                                    <span>翌日からたくさん保湿をお願いします<br>(施術後乾燥しやすくなります。1週間毎日パックできると◎)</span>
+                                </li>
+                                <li class="flex items-start gap-1.5">
+                                    <span class="text-red-400">●</span>
+                                    <span>日焼け対策お願いいたします。</span>
+                                </li>
+                                <li class="flex items-start gap-1.5">
+                                    <span class="text-red-400">●</span>
+                                    <span>施術後2週間はレチノール、ビタミンA含有化粧品などピーリング作用があるものは使用しないでください。</span>
+                                </li>
+                            </ul>
                         </div>
                     </div>
 
@@ -488,7 +555,6 @@
                     datasets: [{
                         label: 'Skin Score',
                         data: [3, 3, 3, 3, 3],
-                        // Gold colors for the chart
                         backgroundColor: 'rgba(212, 175, 55, 0.2)', // brand-500 transparent
                         borderColor: '#d4af37', // brand-500
                         pointBackgroundColor: '#fff',
@@ -505,7 +571,6 @@
                     responsive: true,
                     scales: {
                         r: {
-                            // Gold grid lines
                             angleLines: { color: '#fde68a' }, // brand-200
                             grid: { color: '#fffbf2' }, // brand-50
                             pointLabels: {
@@ -545,17 +610,22 @@
         // 5. UPDATE ALL UI
         // ==========================================
         function updateUI() {
+            // --- Name & Date ---
             const name = document.getElementById('customerName').value || 'Customer';
             document.getElementById('previewName').innerText = name + (name.includes('様') ? '' : ' 様');
             document.getElementById('previewDate').innerText = document.getElementById('visitDate').value.replace(/-/g, '.');
 
+            // --- Menu Logic & Herb Peeling Check ---
             const menuChecks = document.querySelectorAll('.menu-check:checked');
             const menuList = document.getElementById('previewMenuList');
             const adviceArea = document.getElementById('dynamicAdviceArea');
+            const herbWarningArea = document.getElementById('herbWarningArea');
             
             menuList.innerHTML = '';
             adviceArea.innerHTML = '';
             
+            let isHerbPeelingSelected = false;
+
             if (menuChecks.length === 0) {
                 menuList.innerHTML = '<span class="text-xs text-brand-300 font-medium">施術内容なし</span>';
                 adviceArea.classList.add('hidden');
@@ -571,13 +641,18 @@
                     const idx = parseInt(chk.value);
                     const item = menuData[idx];
 
-                    // 1. Add Badge (Gold style)
+                    // Check for Herb Peeling (indices 0, 1, 2)
+                    if (idx === 0 || idx === 1 || idx === 2) {
+                        isHerbPeelingSelected = true;
+                    }
+
+                    // Badge
                     const badge = document.createElement('span');
                     badge.className = "px-3 py-1.5 bg-white border border-brand-200 text-brand-700 text-xs font-bold rounded-md shadow-sm flex items-center gap-1";
                     badge.innerHTML = `<span class="text-brand-400">✔</span> ${item.name}`;
                     menuList.appendChild(badge);
 
-                    // 2. Add Advice/Caution Block (Gold style)
+                    // Advice Block
                     const block = document.createElement('div');
                     block.className = "bg-white/80 p-5 rounded-xl border border-brand-200 shadow-sm relative overflow-hidden";
                     block.innerHTML = `
@@ -601,6 +676,15 @@
                 adviceArea.appendChild(adviceWrapper);
             }
 
+            // --- Herb Peeling Warning Visibility ---
+            if (isHerbPeelingSelected) {
+                herbWarningArea.classList.remove('hidden');
+            } else {
+                herbWarningArea.classList.add('hidden');
+            }
+
+
+            // --- Chart Visibility ---
             const showChart = document.getElementById('toggleChart').checked;
             const chartInput = document.getElementById('chartInputArea');
             const chartPreview = document.getElementById('previewChartArea');
@@ -613,9 +697,11 @@
                 chartPreview.classList.add('hidden');
             }
 
+            // --- Comment ---
             const comment = document.getElementById('freeComment').value;
             document.getElementById('previewComment').innerText = comment || "本日はご来店ありがとうございました。\n施術後は水分をしっかり摂って、ゆっくりお休みください。";
 
+            // --- Next Reservation ---
             const nextDate = document.getElementById('nextDate').value;
             const nextTime = document.getElementById('nextTime').value;
             const nextResDiv = document.getElementById('previewNextRes');
@@ -630,12 +716,39 @@
                 nextResDiv.classList.add('hidden');
             }
 
+            // --- Coupon Logic (Updated) ---
             const couponVal = document.querySelector('input[name="coupon"]:checked').value;
             const couponDiv = document.getElementById('previewCoupon');
+            const couponPrefix = document.getElementById('couponPrefix');
+            const couponValue = document.getElementById('couponValue');
+            const couponUnit = document.getElementById('couponUnit');
             
             if(couponVal !== 'none') {
                 couponDiv.classList.remove('hidden');
-                document.getElementById('couponValue').innerText = couponVal;
+                
+                if (couponVal === '500' || couponVal === '1000' || couponVal === '2000') {
+                    couponPrefix.innerText = "施術代より";
+                    couponValue.innerText = couponVal;
+                    couponValue.style.fontSize = "1.875rem"; // 3xl
+                    couponUnit.innerText = "円 OFF";
+                    couponUnit.classList.add('text-red-500');
+                    couponUnit.classList.remove('text-brand-600');
+                } else if (couponVal === 'pack') {
+                    couponPrefix.innerText = "Home Care Gift";
+                    couponValue.innerText = "ホームケアパック";
+                    couponValue.style.fontSize = "1.25rem"; // Smaller for text
+                    couponUnit.innerText = "プレゼント";
+                    couponUnit.classList.remove('text-red-500');
+                    couponUnit.classList.add('text-brand-600');
+                } else if (couponVal === 'massage') {
+                    couponPrefix.innerText = "Option Service";
+                    couponValue.innerText = "マッサージ";
+                    couponValue.style.fontSize = "1.5rem"; 
+                    couponUnit.innerText = "5分延長";
+                    couponUnit.classList.remove('text-red-500');
+                    couponUnit.classList.add('text-brand-600');
+                }
+
             } else {
                 couponDiv.classList.add('hidden');
             }
